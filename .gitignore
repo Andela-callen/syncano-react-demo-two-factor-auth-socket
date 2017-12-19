@@ -2,6 +2,9 @@
 .idea/
 .DS_Store
 
+.env
+client/production/
+
 # Logs
 logs
 *.log

@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "build:dev": "webpack-dev-server",
-    "start": "node index.js",
+    "start": "webpack -p --config ./webpack.config.prod.js --progress && node index.js",
     "start:dev": "nodemon --exec babel-node server/app.js",
     "start:prod": "webpack -p"
   },
@@ -49,6 +49,7 @@
     "babel-register": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.5",
+    "dotenv-webpack": "^1.5.4",
     "express": "^4.16.2",
     "history": "^4.7.2",
     "keymirror": "^0.1.1",

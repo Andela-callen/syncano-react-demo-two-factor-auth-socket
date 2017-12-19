@@ -3,7 +3,7 @@ import * as actionTypes from '../constants/actionTypes';
 import history from '../utils/history';
 import { handle401 } from '../utils/helpers';
 
-const s = new Syncano('winter-morning-7464');
+const s = new Syncano(process.env.SYNCANO_INSTANCE);
 
 const checkTwoFactorAction = () => (dispatch) => {
   s.post('two-factor-auth/check_two_factor', {

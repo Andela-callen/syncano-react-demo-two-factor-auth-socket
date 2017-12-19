@@ -3,7 +3,7 @@ import * as actionTypes from '../constants/actionTypes';
 import history from '../utils/history';
 import { handle401 } from '../utils/helpers';
 
-const s = new Syncano('winter-morning-7464');
+const s = new Syncano(process.env.SYNCANO_INSTANCE);
 
 /**
  * @param {object} userDetails
@@ -52,8 +52,7 @@ const registerAction = userDetails => (dispatch) => {
  */
 const logoutAction = () => (dispatch) => {
   s.post('rest-auth/refresh', {
-    username: sessionStorage.getItem('username'),
-    token: sessionStorage.getItem('token')
+    _user_key: sessionStorage.getItem('token')
   })
     .then(() => {
       dispatch({ type: actionTypes.LOGOUT });

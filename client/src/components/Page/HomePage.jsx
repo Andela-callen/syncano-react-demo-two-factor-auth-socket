@@ -50,7 +50,7 @@ class HomePage extends Component {
           {
             (!sessionStorage.getItem('token') && !sessionStorage.getItem('username')) ?
               <section>
-                <p className="lead text-muted">Demo app showing the implementation of two.</p>
+                <p className="lead text-muted">Demo app showing the implementation of two factor authentication socket.</p>
               </section> :
               <section>
                 <h3 className="jumbotron-heading">Welcome { sessionStorage.getItem('username')}</h3>
