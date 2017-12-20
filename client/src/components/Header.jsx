@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'react-proptypes';
 
 /**
@@ -34,7 +34,7 @@ const Header = props => (
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/register" className="nav-link" onClick={ () => props.handleLogout() }>Logout</Link>
+                <Link to="" className="nav-link" onClick={ () => props.handleLogout(props.history) }>Logout</Link>
               </li>
             </ul>
         }
@@ -45,7 +45,8 @@ const Header = props => (
 );
 
 Header.propTypes = {
-  handleLogout: PropTypes.func
+  handleLogout: PropTypes.func,
+  history: PropTypes.object
 };
 
-export default Header;
+export default withRouter(Header);

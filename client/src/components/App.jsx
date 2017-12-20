@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Router, Switch, Route } from 'react-router-dom';
+import { Switch, HashRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'react-proptypes';
 import { alertClear } from '../actions/alertActions';
 import { logoutAction } from '../actions/authActions';
 import Header from '../components/Header';
-import { HomePage, LoginPage, RegisterPage, SetUpTwoFactorPage, DisableTwoFactorPage } from './Page';
-import history from '../utils/history';
+import { HomePage, LoginPage, RegisterPage, UserHomePage, SetUpTwoFactorPage, DisableTwoFactorPage } from './Page';
+import customHistory from '../utils/history';
 import PrivateRoute from '../routes/PrivateRoute';
 import PublicRoute from '../routes/PublicRoute';
 
@@ -25,17 +25,18 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    history.listen(() => {
+    customHistory.listen(() => {
       this.props.alertClear();
     });
   }
 
   /**
    * on click of logout link
+   * @param {object} history
    * @return {void} void
    */
-  handleLogout = () => {
-    this.props.logoutAction();
+  handleLogout = (history) => {
+    this.props.logoutAction(history);
   };
 
   /**
@@ -45,21 +46,22 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <Router history={history}>
+        <HashRouter>
           <div>
             <Header
               handleLogout={this.handleLogout}
             />
             <Switch>
-              <Route exact path='/' component={HomePage}/>
-                <PublicRoute path='/login' component={LoginPage}/>
-                <PublicRoute path='/register' component={RegisterPage}/>
-                <PrivateRoute path='/two-factor-setup' component={SetUpTwoFactorPage}/>
-                <PrivateRoute path='/two-factor-disable' component={DisableTwoFactorPage}/>
-                <Route path="*" component={HomePage}/>
+              <PublicRoute exact path='/' component={HomePage}/>
+              <PrivateRoute exact path='/dashboard' component={UserHomePage}/>
+              <PublicRoute exact path='/login' component={LoginPage}/>
+              <PublicRoute exact path='/register' component={RegisterPage}/>
+              <PrivateRoute exact path='/two-factor-setup' component={SetUpTwoFactorPage}/>
+              <PrivateRoute exact path='/two-factor-disable' component={DisableTwoFactorPage}/>
+              <PublicRoute path="*" component={HomePage}/>
             </Switch>
           </div>
-        </Router>
+        </HashRouter>
       </div>
     );
   }

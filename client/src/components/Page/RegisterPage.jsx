@@ -38,7 +38,7 @@ export class RegisterPage extends Component {
   handleSubmit = (userCredentials) => {
     if (this.isValid(userCredentials)) {
       this.setState({ errors: {} });
-      this.props.registerAction(userCredentials);
+      this.props.registerAction(userCredentials, this.props.history);
     }
   };
 
@@ -69,6 +69,7 @@ export class RegisterPage extends Component {
 
 RegisterPage.propTypes = {
   alertState: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   registerAction: PropTypes.func.isRequired,
   alertClear: PropTypes.func.isRequired
 };

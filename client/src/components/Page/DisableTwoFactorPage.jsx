@@ -33,7 +33,7 @@ export class DisableTwoFactorPage extends Component {
    */
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.disableTwoFactorAction(this.state.twoFactorToken);
+    this.props.disableTwoFactorAction(this.state.twoFactorToken, this.props.history);
   };
 
   /**
@@ -80,6 +80,7 @@ export class DisableTwoFactorPage extends Component {
 DisableTwoFactorPage.propTypes = {
   twoFactorState: PropTypes.object.isRequired,
   alertState: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   disableTwoFactorAction: PropTypes.func.isRequired,
   alertClear: PropTypes.func.isRequired
 };

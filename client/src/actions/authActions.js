@@ -1,15 +1,15 @@
 import Syncano from 'syncano-client';
 import * as actionTypes from '../constants/actionTypes';
-import history from '../utils/history';
 import { handle401 } from '../utils/helpers';
 
 const s = new Syncano(process.env.SYNCANO_INSTANCE);
 
 /**
  * @param {object} userDetails
+ * @param {object} history
  * @return {void}
  */
-const loginAction = userDetails => (dispatch) => {
+const loginAction = (userDetails, history) => (dispatch) => {
   s.post('two-factor-auth/login', userDetails)
     .then((user) => {
       if (user.message) {
@@ -18,7 +18,7 @@ const loginAction = userDetails => (dispatch) => {
         sessionStorage.setItem('token', user.token);
         sessionStorage.setItem('username', user.username);
         dispatch({ type: actionTypes.LOGIN_SUCCESSFUL, payload: user });
-        history.push('/');
+        history.push('/dashboard');
       }
     })
     .catch((err) => {
@@ -29,16 +29,17 @@ const loginAction = userDetails => (dispatch) => {
 
 /**
  * @param {object} userDetails
+ * @param {object} history
  * @return {void}
  */
-const registerAction = userDetails => (dispatch) => {
+const registerAction = (userDetails, history) => (dispatch) => {
   s.post('rest-auth/register', userDetails)
     .then((user) => {
       sessionStorage.setItem('token', user.token);
-      sessionStorage.setItem('username', user.email);
+      sessionStorage.setItem('username', userDetails.username);
       dispatch({ type: actionTypes.REGISTER_SUCCESSFUL });
       dispatch({ type: actionTypes.LOGIN_SUCCESSFUL, payload: user });
-      history.push('/');
+      history.push('/dashboard');
     })
     .catch((err) => {
       dispatch({ type: actionTypes.REGISTER_SUCCESSFUL });
@@ -48,15 +49,16 @@ const registerAction = userDetails => (dispatch) => {
 
 /**
  * On logout refresh user token then clear sessionStorage
+ * @param {object} history
  * @return {void}
  */
-const logoutAction = () => (dispatch) => {
+const logoutAction = history => (dispatch) => {
   s.post('rest-auth/refresh', {
     _user_key: sessionStorage.getItem('token')
   })
     .then(() => {
       dispatch({ type: actionTypes.LOGOUT });
-      handle401();
+      handle401(history);
     });
 };
 

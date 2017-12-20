@@ -38,7 +38,7 @@ export class LoginPage extends Component {
   handleSubmit = (userCredentials) => {
     if (this.isValid(userCredentials)) {
       this.setState({ errors: {} });
-      this.props.loginAction(userCredentials);
+      this.props.loginAction(userCredentials, this.props.history);
     }
   };
 
@@ -71,8 +71,9 @@ export class LoginPage extends Component {
 LoginPage.propTypes = {
   alertState: PropTypes.object.isRequired,
   loginState: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   loginAction: PropTypes.func.isRequired,
-  alertClear: PropTypes.func.isRequired
+  alertClear: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

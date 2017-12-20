@@ -22,7 +22,7 @@ export class SetUpTwoFactorPage extends Component {
    * @return {void} void
    */
   componentWillMount() {
-    this.props.setUpTwoFactorAction();
+    this.props.setUpTwoFactorAction(this.props.history);
   }
 
   /**
@@ -41,7 +41,7 @@ export class SetUpTwoFactorPage extends Component {
    */
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.verifyTwoFactorTokenAction(this.state.twoFactorToken);
+    this.props.verifyTwoFactorTokenAction(this.state.twoFactorToken, this.props.history);
   };
 
   /**
@@ -95,6 +95,7 @@ export class SetUpTwoFactorPage extends Component {
 SetUpTwoFactorPage.propTypes = {
   twoFactorState: PropTypes.object.isRequired,
   alertState: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   verifyTwoFactorTokenAction: PropTypes.func.isRequired,
   setUpTwoFactorAction: PropTypes.func.isRequired,
   alertClear: PropTypes.func.isRequired

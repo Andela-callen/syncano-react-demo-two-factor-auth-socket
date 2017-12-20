@@ -1,11 +1,10 @@
 import Syncano from 'syncano-client';
 import * as actionTypes from '../constants/actionTypes';
-import history from '../utils/history';
 import { handle401 } from '../utils/helpers';
 
 const s = new Syncano(process.env.SYNCANO_INSTANCE);
 
-const checkTwoFactorAction = () => (dispatch) => {
+const checkTwoFactorAction = history => (dispatch) => {
   s.post('two-factor-auth/check_two_factor', {
     username: sessionStorage.getItem('username'),
     token: sessionStorage.getItem('token')
@@ -16,14 +15,14 @@ const checkTwoFactorAction = () => (dispatch) => {
     .catch((err) => {
       if (err.response.status === 401) {
         dispatch({ type: actionTypes.LOGOUT });
-        handle401();
+        handle401(history);
       } else {
         dispatch({ type: actionTypes.CHECK_TWO_FACTOR, payload: false });
       }
     });
 };
 
-const setUpTwoFactorAction = () => (dispatch) => {
+const setUpTwoFactorAction = history => (dispatch) => {
   s.post('two-factor-auth/setup_two_factor', {
     username: sessionStorage.getItem('username'),
     token: sessionStorage.getItem('token')
@@ -34,14 +33,14 @@ const setUpTwoFactorAction = () => (dispatch) => {
     .catch((err) => {
       if (err.response.status === 401) {
         dispatch({ type: actionTypes.LOGOUT });
-        handle401();
+        handle401(history);
       } else {
         dispatch({ type: actionTypes.ALERT_ERROR, payload: err.response.data.message });
       }
     });
 };
 
-const verifyTwoFactorTokenAction = twoFactorToken => (dispatch) => {
+const verifyTwoFactorTokenAction = (twoFactorToken, history) => (dispatch) => {
   s.post('two-factor-auth/verify_token', {
     username: sessionStorage.getItem('username'),
     token: sessionStorage.getItem('token'),
@@ -49,19 +48,19 @@ const verifyTwoFactorTokenAction = twoFactorToken => (dispatch) => {
   })
     .then(() => {
       dispatch({ type: actionTypes.VERIFY_TWO_FACTOR_TOKEN, payload: true });
-      history.push('/');
+      history.push('/dashboard');
     })
     .catch((err) => {
       if (err.response.status === 401) {
         dispatch({ type: actionTypes.LOGOUT });
-        handle401();
+        handle401(history);
       } else {
         dispatch({ type: actionTypes.ALERT_ERROR, payload: err.response.data.message });
       }
     });
 };
 
-const disableTwoFactorAction = twoFactorToken => (dispatch) => {
+const disableTwoFactorAction = (twoFactorToken, history) => (dispatch) => {
   s.post('two-factor-auth/disable_two_factor', {
     username: sessionStorage.getItem('username'),
     token: sessionStorage.getItem('token'),
@@ -69,12 +68,12 @@ const disableTwoFactorAction = twoFactorToken => (dispatch) => {
   })
     .then(() => {
       dispatch({ type: actionTypes.DISABLE_TWO_FACTOR, payload: false });
-      history.push('/');
+      history.push('/dashboard');
     })
     .catch((err) => {
       if (err.response.status === 401) {
         dispatch({ type: actionTypes.LOGOUT });
-        handle401();
+        handle401(history);
       } else {
         dispatch({ type: actionTypes.ALERT_ERROR, payload: err.response.data.message });
       }
