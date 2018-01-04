@@ -7,7 +7,7 @@
     "build:dev": "webpack-dev-server",
     "start": "webpack -p --config ./webpack.config.prod.js --progress && node index.js",
     "start:dev": "nodemon --exec babel-node server/app.js",
-    "start:prod": "webpack -p"
+    "start:prod": "webpack -p --config ./webpack.config.prod.js --progress"
   },
   "keywords": [
     "two-factor",

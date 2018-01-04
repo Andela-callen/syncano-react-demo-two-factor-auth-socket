@@ -34,7 +34,7 @@ const Header = props => (
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="" className="nav-link" onClick={ () => props.handleLogout(props.history) }>Logout</Link>
+                <Link to="#" className="nav-link" onClick={ () => props.handleLogout(props.history) }>Logout</Link>
               </li>
             </ul>
         }

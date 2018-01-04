@@ -5,7 +5,7 @@ import { handle401 } from '../utils/helpers';
 const s = new Syncano(process.env.SYNCANO_INSTANCE);
 
 const checkTwoFactorAction = history => (dispatch) => {
-  s.post('two-factor-auth/check_two_factor', {
+  s.post('two-factor-auth/check-two-factor', {
     username: sessionStorage.getItem('username'),
     token: sessionStorage.getItem('token')
   })
@@ -23,7 +23,7 @@ const checkTwoFactorAction = history => (dispatch) => {
 };
 
 const setUpTwoFactorAction = history => (dispatch) => {
-  s.post('two-factor-auth/setup_two_factor', {
+  s.post('two-factor-auth/setup-two-factor', {
     username: sessionStorage.getItem('username'),
     token: sessionStorage.getItem('token')
   })
@@ -41,7 +41,7 @@ const setUpTwoFactorAction = history => (dispatch) => {
 };
 
 const verifyTwoFactorTokenAction = (twoFactorToken, history) => (dispatch) => {
-  s.post('two-factor-auth/verify_token', {
+  s.post('two-factor-auth/verify-token', {
     username: sessionStorage.getItem('username'),
     token: sessionStorage.getItem('token'),
     two_factor_token: twoFactorToken
@@ -61,7 +61,7 @@ const verifyTwoFactorTokenAction = (twoFactorToken, history) => (dispatch) => {
 };
 
 const disableTwoFactorAction = (twoFactorToken, history) => (dispatch) => {
-  s.post('two-factor-auth/disable_two_factor', {
+  s.post('two-factor-auth/disable-two-factor', {
     username: sessionStorage.getItem('username'),
     token: sessionStorage.getItem('token'),
     two_factor_token: twoFactorToken

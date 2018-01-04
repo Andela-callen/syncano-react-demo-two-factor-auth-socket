@@ -35,6 +35,15 @@ class UserHomePage extends Component {
    * @return {XML} JSX
    */
   render() {
+    const { isTwoFactor } = this.props.twoFactorState;
+    let twoFactorStatus = null;
+    if (isTwoFactor !== null) {
+      if (isTwoFactor !== true) {
+        twoFactorStatus = <Link to="/two-factor-setup" className="btn btn-primary">Setup Two-factor Auth</Link>;
+      } else {
+        twoFactorStatus = <Link to="/two-factor-disable" className="btn btn-danger">Disable Two-factor Auth</Link>;
+      }
+    }
     return (
         <section className="jumbotron text-center">
           {
@@ -44,11 +53,7 @@ class UserHomePage extends Component {
                 <section>
                   <h3 className="jumbotron-heading">Welcome {sessionStorage.getItem('username')}</h3>
                   <p>
-                    {
-                      (this.props.twoFactorState.isTwoFactor !== true) ?
-                        <Link to="/two-factor-setup" className="btn btn-primary">Setup Two-factor Auth</Link> :
-                        <Link to="/two-factor-disable" className="btn btn-danger">Disable Two-factor Auth</Link>
-                    }
+                    { twoFactorStatus }
                   </p>
                   {this.props.alertState.message ?
                     <Alert

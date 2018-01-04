@@ -1,7 +1,7 @@
 const handle401 = (history) => {
   sessionStorage.removeItem('token');
   sessionStorage.removeItem('username');
-  history.push('/#/');
+  history.push('/');
 };
 
 const checkRequired = (val) => {

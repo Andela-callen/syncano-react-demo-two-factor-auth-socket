@@ -3,7 +3,7 @@ import {
 } from '../constants/actionTypes';
 
 const initialState = {
-  isTwoFactor: false,
+  isTwoFactor: null,
   twoFactorDetails: null
 };
 
