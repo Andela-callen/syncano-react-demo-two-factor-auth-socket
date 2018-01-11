@@ -3,7 +3,8 @@
 .DS_Store
 
 .env
-client/production/
+client/production/bundle.js
+client/production/styles.js
 
 # Logs
 logs
