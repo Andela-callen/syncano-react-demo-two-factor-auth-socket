@@ -55,13 +55,15 @@ export class LoginPage extends Component {
    * @return {XML} JSX
    */
   render() {
+    const { alertState, loginState } = this.props;
+
     return (
       <AuthComponent
-        alertState={ this.props.alertState }
+        alertState={ alertState }
         authType= 'login'
         authSubmit={ this.handleSubmit }
-        onAlertClose={this.onAlertClose}
-        authState={ this.props.loginState}
+        onAlertClose={ this.onAlertClose }
+        authState={ loginState}
         authErrors={ this.state.errors }
       />
     );

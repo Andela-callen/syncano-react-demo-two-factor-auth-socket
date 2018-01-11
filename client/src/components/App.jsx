@@ -49,16 +49,16 @@ class App extends Component {
         <HashRouter>
           <div>
             <Header
-              handleLogout={this.handleLogout}
+              handleLogout={ this.handleLogout }
             />
             <Switch>
-              <PublicRoute exact path='/' component={HomePage}/>
-              <PrivateRoute exact path='/dashboard' component={UserHomePage}/>
-              <PublicRoute exact path='/login' component={LoginPage}/>
-              <PublicRoute exact path='/register' component={RegisterPage}/>
-              <PrivateRoute exact path='/two-factor-setup' component={SetUpTwoFactorPage}/>
-              <PrivateRoute exact path='/two-factor-disable' component={DisableTwoFactorPage}/>
-              <PublicRoute path="*" component={HomePage}/>
+              <PublicRoute exact path='/' component={ HomePage }/>
+              <PrivateRoute exact path='/dashboard' component={ UserHomePage }/>
+              <PublicRoute exact path='/login' component={ LoginPage }/>
+              <PublicRoute exact path='/register' component={ RegisterPage }/>
+              <PrivateRoute exact path='/two-factor-setup' component={ SetUpTwoFactorPage }/>
+              <PrivateRoute exact path='/two-factor-disable' component={ DisableTwoFactorPage }/>
+              <PublicRoute path="*" component={ HomePage }/>
             </Switch>
           </div>
         </HashRouter>

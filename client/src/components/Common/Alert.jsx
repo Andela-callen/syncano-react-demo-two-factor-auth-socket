@@ -7,12 +7,12 @@ import PropTypes from 'react-proptypes';
  * @param {object} props
  * @return {XML} JSX
  */
-const Alert = props => (
-  <div className={ classnames('alert alert-dismissible', props.alertType) } role="alert">
-    { props.message }
+const Alert = ({ alertType, message, onAlertClose }) => (
+  <div className={ classnames('alert alert-dismissible', alertType) } role="alert">
+    { message }
     <button type="button" className="close" aria-label="Close">
       <span aria-hidden="true"
-            onClick={() => props.onAlertClose()}>x</span>
+            onClick={ () => onAlertClose() }>x</span>
     </button>
   </div>
 );

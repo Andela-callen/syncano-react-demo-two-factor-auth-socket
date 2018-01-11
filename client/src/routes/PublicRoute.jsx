@@ -3,10 +3,10 @@ import PropTypes from 'react-proptypes';
 import { Route, Redirect } from 'react-router-dom';
 
 const PublicRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
+  <Route { ...rest } render={ props => (
     window.sessionStorage.getItem('token')
-      ? <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />
-      : <Component {...props} />
+      ? <Redirect to={ { pathname: '/dashboard', state: { from: props.location } } } />
+      : <Component { ...props } />
   )} />
 );
 

@@ -57,14 +57,17 @@ export class SetUpTwoFactorPage extends Component {
    * @return {XML} JSX
    */
   render() {
-    const { twoFactorDetails } = this.props.twoFactorState;
+    const { twoFactorState, alertState } = this.props;
+    const { type: alertType, message: alertMessage } = alertState;
+    const { twoFactorDetails } = twoFactorState;
+
     return (
       <div className="offset-sm-2 col-sm-8 offset-lg-3 col-lg-6">
-        { this.props.alertState.message ?
+        { alertMessage ?
           <Alert
-            alertType={this.props.alertState.type}
-            message={this.props.alertState.message}
-            onAlertClose={this.onAlertClose}
+            alertType={ alertType }
+            message={ alertMessage }
+            onAlertClose={ this.onAlertClose }
           /> : null
         }
         {
@@ -76,7 +79,7 @@ export class SetUpTwoFactorPage extends Component {
               <form onSubmit={ this.handleSubmit }>
                 <FormField
                   onChange={ this.handleChange }
-                  value={this.state.twoFactorToken}
+                  value={ this.state.twoFactorToken }
                   name="twoFactorToken"
                   label='OTP Token'
                 />

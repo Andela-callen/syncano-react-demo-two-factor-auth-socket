@@ -17,9 +17,7 @@ class UserHomePage extends Component {
    * @return {void} void
    */
   componentDidMount() {
-    if (sessionStorage.token && sessionStorage.username) {
-      this.props.checkTwoFactorAction(this.props.history);
-    }
+    this.props.checkTwoFactorAction(this.props.history);
   }
 
   /**
@@ -35,39 +33,36 @@ class UserHomePage extends Component {
    * @return {XML} JSX
    */
   render() {
-    const { isTwoFactor } = this.props.twoFactorState;
+    const { twoFactorState, alertState } = this.props;
+    const { type: alertType, message: alertMessage } = alertState;
+    const { isTwoFactor } = twoFactorState;
+
     let twoFactorStatus = null;
-    if (isTwoFactor !== null) {
-      if (isTwoFactor !== true) {
-        twoFactorStatus = <Link to="/two-factor-setup" className="btn btn-primary">Setup Two-factor Auth</Link>;
-      } else {
-        twoFactorStatus = <Link to="/two-factor-disable" className="btn btn-danger">Disable Two-factor Auth</Link>;
-      }
+    if (isTwoFactor !== null && isTwoFactor !== true) {
+      twoFactorStatus = <Link to="/two-factor-setup" className="btn btn-primary">Setup Two-factor Auth</Link>;
+    } else if (isTwoFactor !== null) {
+      twoFactorStatus = <Link to="/two-factor-disable" className="btn btn-danger">Disable Two-factor Auth</Link>;
     }
+
     return (
-        <section className="jumbotron text-center">
-          {
-            (sessionStorage.token) ?
-              <div className="container">
-                <h1 className="jumbotron-heading">Syncano two factor authentication</h1>
-                <section>
-                  <h3 className="jumbotron-heading">Welcome {sessionStorage.getItem('username')}</h3>
-                  <p>
-                    { twoFactorStatus }
-                  </p>
-                  {this.props.alertState.message ?
-                    <Alert
-                      alertType={this.props.alertState.type}
-                      message={this.props.alertState.message}
-                      onAlertClose={this.onAlertClose}
-                    /> : null
-                  }
-                </section>
-              </div>
-              :
-              <Redirect exact to="/"/>
-          }
-        </section>
+      <section className="jumbotron text-center">
+        <div className="container">
+          <h1 className="jumbotron-heading">Syncano two factor authentication</h1>
+          <section>
+            <h3 className="jumbotron-heading mt-4 mb-5">Welcome { sessionStorage.getItem('username') }</h3>
+            <p>
+              { twoFactorStatus }
+            </p>
+            { alertMessage ?
+              <Alert
+                alertType={ alertType }
+                message={ alertMessage }
+                onAlertClose={ this.onAlertClose }
+              /> : null
+            }
+          </section>
+        </div>
+      </section>
     );
   }
 }

@@ -42,7 +42,7 @@ const registerAction = (userDetails, history) => (dispatch) => {
       history.push('/dashboard');
     })
     .catch((err) => {
-      dispatch({ type: actionTypes.REGISTER_SUCCESSFUL });
+      dispatch({ type: actionTypes.REGISTER_UNSUCCESSFUL });
       dispatch({ type: actionTypes.ALERT_ERROR, payload: err.response.data.username });
     });
 };

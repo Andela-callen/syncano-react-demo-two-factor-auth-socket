@@ -44,89 +44,66 @@ class AuthComponent extends Component {
    * @return {XML} JSX
    */
   render() {
+    const { username, password, two_factor_token: twoFactorToken } = this.state;
+    const { authType, alertState, onAlertClose, authErrors, authState } = this.props;
+    const { type: alertType, message: alertMessage } = alertState;
+
     return (
       <div className="offset-sm-2 col-sm-8 offset-lg-3 col-lg-6">
         <h1 className="text-center mb-5">
-          { (this.props.authType === 'login') ? 'LOGIN' : 'REGISTER' }
+          { (authType === 'login') ? 'LOGIN' : 'REGISTER' }
         </h1>
         <form onSubmit={ this.handleSubmit } >
-          { this.props.alertState.message ?
+          { alertMessage ?
             <Alert
-              alertType={this.props.alertState.type}
-              message={this.props.alertState.message}
-              onAlertClose={this.props.onAlertClose}
+              alertType={ alertType }
+              message={ alertMessage }
+              onAlertClose={ onAlertClose }
             /> : null
           }
-          {
-            (this.props.authType === 'login') ?
-              <div>
+          <div>
+            <FormField
+              errors={ authErrors }
+              onChange={ this.handleChange }
+              value={ username }
+              name="username"
+              label='Username'
+            />
+            <FormField
+              type="password"
+              errors={ authErrors }
+              onChange={ this.handleChange }
+              value={ password }
+              name="password"
+              label="Password"
+              />
+            {
+              (authType === 'login' && authState.showOTP === true) ?
                 <FormField
-                  errors={this.props.authErrors}
                   onChange={ this.handleChange }
-                  value={this.state.userDetails.username}
-                  name="username"
-                  label='Username'
+                  value={ twoFactorToken }
+                  name="two_factor_token"
+                  label='Enter OTP Token'
                 />
-                <FormField
-                  type="password"
-                  errors={this.props.authErrors}
-                  onChange={ this.handleChange }
-                  value={this.state.userDetails.password}
-                  name="password"
-                  label="Password"
-                  />
-                {
-                  (this.props.authState.showOTP === true) ?
-                    <FormField
-                      onChange={ this.handleChange }
-                      value={this.state.userDetails.two_factor_token}
-                      name="two_factor_token"
-                      label='Enter OTP Token'
-                    />
-                    : null
-                }
-              </div>
-            :
-              <div>
-                <FormField
-                  errors={this.props.authErrors}
-                  onChange={ this.handleChange }
-                  value={this.state.userDetails.username}
-                  name="username"
-                  label='Username'
-                />
-                <FormField
-                  type="password"
-                  errors={this.props.authErrors}
-                  onChange={ this.handleChange }
-                  value={this.state.userDetails.password}
-                  name="password"
-                  label="Password"
-                />
-              </div>
-          }
+                : null
+            }
+          </div>
           <div className="form-group lead">
             <div className="offset-sm-3 col-sm-6">
               <button type="submit" className="btn btn-lg btn-primary btn-block">
-                { (this.props.authType === 'login') ? 'LOGIN' : 'REGISTER' }
+                { (authType === 'login') ? 'Login' : 'Register' }
               </button>
             </div>
           </div>
           <div className="form-group">
             <div className="offset-sm-3 col-sm-6">
               {
-                (this.props.authType === 'login') ?
+                (authType === 'login') ?
                   <span className="pull-left">
-                    No Account yet ?
-                    <Link className="text-underline text-signin" to="/register">
-                      <strong> Register</strong>
-                    </Link>
+                    "No Account yet" ? <Link className="text-underline text-signin" to="/register"><strong>Register </strong></Link>
                   </span> :
                   <span className="pull-left">
-                    Already registered ?
-                    <Link className="text-underline text-signin" to="/login">
-                      <strong> Login</strong>
-                    </Link>
+                    "Already registered" ? <Link className="text-underline text-signin" to="/login"><strong>Login </strong></Link>
                   </span>
               }
             </div>
@@ -137,8 +114,8 @@ class AuthComponent extends Component {
   }
 }
 AuthComponent.propTypes = {
-  authErrors: PropTypes.object,
-  authState: PropTypes.object,
+  authErrors: PropTypes.object.isRequired,
+  authState: PropTypes.object.isRequired,
   alertState: PropTypes.object.isRequired,
   authType: PropTypes.string.isRequired,
   authSubmit: PropTypes.func.isRequired,

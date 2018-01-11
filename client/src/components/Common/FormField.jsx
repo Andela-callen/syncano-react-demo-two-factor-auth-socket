@@ -8,20 +8,20 @@ import PropTypes from 'react-proptypes';
  * @param {object} props
  * @return {XML} JSX
  */
-const FormField = props => (
+const FormField = ({ onChange, type, name, label, value, errors }) => (
   <div className="form-group">
-    <label className={'form-control-label'} htmlFor={ props.name }>{ props.label}</label>
-      <input
-        onChange={ props.onChange }
-        type={ props.type ? props.type : 'text' }
-        className={ classnames('form-control', { 'is-invalid': props.errors && props.errors[props.name] }) }
-        name={ props.name }
-        id={ props.name }
-        value={ props.value }
-      />
-    { props.errors && props.errors[props.name] ?
+    <label className={ 'form-control-label' } htmlFor={ name }>{ label }</label>
+    <input
+      onChange={ onChange }
+      type={ type || 'text' }
+      className={ classnames('form-control', { 'is-invalid': errors && errors[name] }) }
+      name={ name }
+      id={ name }
+      value={ value }
+    />
+    { errors && errors[name] ?
       <div className="invalid-feedback">
-        {props.errors[props.name]}
+        { errors[name] }
       </div> : false
     }
   </div>

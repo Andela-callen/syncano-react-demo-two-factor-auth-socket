@@ -55,12 +55,15 @@ export class RegisterPage extends Component {
    * @return {XML} JSX
    */
   render() {
+    const { alertState, loginState } = this.props;
+
     return (
       <AuthComponent
-        alertState={ this.props.alertState }
+        alertState={ alertState }
         authType= 'register'
         authSubmit={ this.handleSubmit }
         onAlertClose={ this.onAlertClose }
+        authState={ loginState}
         authErrors={ this.state.errors }
       />
     );
@@ -69,13 +72,15 @@ export class RegisterPage extends Component {
 
 RegisterPage.propTypes = {
   alertState: PropTypes.object.isRequired,
+  loginState: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   registerAction: PropTypes.func.isRequired,
   alertClear: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  alertState: state.alertReducer
+  alertState: state.alertReducer,
+  loginState: state.loginReducer
 });
 
 const mapDispatchToProps = dispatch =>
