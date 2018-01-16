@@ -5,7 +5,7 @@ const Dotenv = require('dotenv-webpack');
 
 const PATHS = {
   app: path.join(__dirname, './client/src'),
-  build: path.join(__dirname, './client/public')
+  build: path.join(__dirname, './client/production')
 };
 
 module.exports = {
@@ -24,16 +24,10 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('styles.css'),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
-      }
-    }),
     new Dotenv({
       path: './.env'
     })
   ],
-  devtool: 'eval-source-map',
   module: {
     loaders: [
       {
@@ -60,13 +54,6 @@ module.exports = {
         loader: 'url-loader?limit=250000'
       }
     ]
-  },
-  devServer: {
-    historyApiFallback: true,
-    hot: true,
-    inline: true,
-    stats: 'errors-only',
-    contentBase: PATHS.build
   },
   externals: {
     jquery: 'jquery'

@@ -1,6 +1,12 @@
 import { combineReducers } from 'redux';
-import sampleReducer from './sampleReducer';
+import alertReducer from './alertReducer';
+import loginReducer from './loginReducer';
+import registerReducer from './registerReducer';
+import twoFactorReducer from './twoFactorReducer';
 
 export default combineReducers({
-  sampleReducer,
+  alertReducer,
+  loginReducer,
+  registerReducer,
+  twoFactorReducer
 });
